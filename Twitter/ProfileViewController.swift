@@ -22,6 +22,7 @@ class ProfileViewController: UIViewController {
     
     
     
+    @IBOutlet weak var coverPicView: UIImageView!
 
     @IBOutlet weak var titleLabel: UILabel!
     
@@ -38,11 +39,12 @@ class ProfileViewController: UIViewController {
             self.nameLabel.text = self.twitterUser!.name
             self.screenNameLabel.text = "@\(self.twitterUser!.screenName!)"
             self.descriptionLabel.text = self.twitterUser!.userDescription
-            self.numLikesLabel.text  = "Likes: \(self.twitterUser!.numFav)"
-            self.numFollowersLabel.text = "Followers: \(self.twitterUser!.numFollowers)"
-            self.numFollowingLabel.text = "Following: \(self.twitterUser!.numFollowing)"
-            self.numTweetsLabel.text = "Tweets: \(self.twitterUser!.numTweets)"
+            //self.numLikesLabel.text  = "\(self.twitterUser!.numFav)"
+            self.numFollowersLabel.text = "\(self.twitterUser!.numFollowers)"
+            self.numFollowingLabel.text = "\(self.twitterUser!.numFollowing)"
+            self.numTweetsLabel.text = "\(self.twitterUser!.numTweets)"
             self.profPicView.setImageWithURL(self.twitterUser!.profileUrl!)
+            self.coverPicView.setImageWithURL(self.twitterUser!.coverUrl!)
 
             
             

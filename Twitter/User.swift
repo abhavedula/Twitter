@@ -18,6 +18,8 @@ class User: NSObject {
     var numFollowers: Int = 0
     var numFollowing: Int = 0
     var numTweets: Int = 0
+    var coverUrl: NSURL?
+
     
     var dictionary: NSDictionary?
     
@@ -40,7 +42,13 @@ class User: NSObject {
             profileUrl = NSURL(string: newString)
         }
         
-        //print(response)
+        let coverUrlString = response["profile_banner_url"] as? String
+        
+        if let coverUrlString = coverUrlString {
+            coverUrl = NSURL(string: coverUrlString)
+        }
+        
+        print(response)
         
     }
     

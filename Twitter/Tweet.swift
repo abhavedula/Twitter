@@ -54,7 +54,8 @@ class Tweet: NSObject {
                 let newString = aString.stringByReplacingOccurrencesOfString("_normal", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
                 profileUrl = NSURL(string: newString)
         }
-            
+        
+        
         let response2 = response["entities"] as? NSDictionary
         let response3 = response2!["media"]
         if let response3 = response3 {
@@ -64,7 +65,7 @@ class Tweet: NSObject {
         } else {
             id = response["id_str"] as! String
         }
-       print(response)
+       //print(response)
         
     }
     
@@ -80,20 +81,20 @@ class Tweet: NSObject {
     }
     
     func AgoStringFromTime(dateTime: NSDate) -> String {
-        var timeScale: [String : Int] = ["sec": 1, "min": 60, "hr": 3600, "day": 86400, "week": 605800, "month": 2629743, "year": 31556926]
+        var timeScale: [String : Int] = ["s": 1, "m": 60, "h": 3600, "d": 86400, "week": 605800, "month": 2629743, "year": 31556926]
         var scale: String
         var timeAgo: Int = 0 - Int(dateTime.timeIntervalSinceNow)
         if timeAgo < 60 {
-            scale = "sec"
+            scale = "s"
         }
         else if timeAgo < 3600 {
-            scale = "min"
+            scale = "m"
         }
         else if timeAgo < 86400 {
-            scale = "hr"
+            scale = "h"
         }
         else if timeAgo < 605800 {
-            scale = "day"
+            scale = "d"
         }
         else if timeAgo < 2629743 {
             scale = "week"
@@ -106,11 +107,9 @@ class Tweet: NSObject {
         }
         
         timeAgo = timeAgo / timeScale[scale]!
-        var s: String = ""
-        if timeAgo > 1 {
-            s = "s"
-        }
-        return "\(timeAgo) \(scale)\(s)"
+        
+        
+        return "\(timeAgo)\(scale)"
     }
 
 

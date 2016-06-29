@@ -30,9 +30,10 @@ class ComposeViewController: UIViewController {
         let status = tweetField.text
         
         let aString: String = status!
-        let newString = aString.stringByReplacingOccurrencesOfString(" ", withString: "%20", options: NSStringCompareOptions.LiteralSearch, range: nil)
         
-            TwitterClient.sharedInstance.post(newString)
+        let newString = aString.stringByReplacingOccurrencesOfString(", ", withString: "%2c")
+        let newString2 = newString.stringByReplacingOccurrencesOfString(" ", withString: "%20", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            TwitterClient.sharedInstance.post(newString2)
     }
     /*
     // MARK: - Navigation

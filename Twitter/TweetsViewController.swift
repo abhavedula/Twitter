@@ -12,7 +12,7 @@ import BDBOAuth1Manager
 
 
 
-class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     
     var tweets: [Tweet] = []
     
@@ -26,6 +26,10 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var id: String?
     
     var profileButtonRow: Int?
+    
+    var isMoreDataLoading = false
+    var loadingMoreView:InfiniteScrollActivityView?
+
 
  
     @IBAction func onComposeButton(sender: AnyObject) {
@@ -37,7 +41,54 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if (!isMoreDataLoading) {
+            // Calculate the position of one screen length before the bottom of the results
+            let scrollViewContentHeight = tableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
+            
+            // When the user has scrolled past the threshold, start requesting
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.dragging) {
+                isMoreDataLoading = true
+                
+                // Update position of loadingMoreView, and start loading indicator
+                let frame = CGRectMake(0, tableView.contentSize.height, tableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight)
+                loadingMoreView?.frame = frame
+                loadingMoreView!.startAnimating()
+                
+                // Code to load more results
+                loadMoreData()		
+            }
+        }
+    }
     
+    func loadMoreData() {
+        
+        
+        TwitterClient.sharedInstance.homeTimeline({ (tweets:[Tweet]) -> () in
+            self.isMoreDataLoading = false
+            
+            // ... Use the new data to update the data source ...
+            self.loadingMoreView!.stopAnimating()
+            self.tweets = tweets
+
+            
+            // Reload the tableView now that there is new data
+            self.tableView.reloadData()
+
+            
+            
+            
+            }, failure: { (error: NSError) -> () in
+                print(error.localizedDescription)
+                
+            }
+            
+        )
+
+    }
+    
+
     
     @IBAction func onRetweetButton(sender: AnyObject) {
         
@@ -120,7 +171,15 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         )
         
+        // Set up Infinite Scroll loading indicator
+        let frame = CGRectMake(0, tableView.contentSize.height, tableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight)
+        loadingMoreView = InfiniteScrollActivityView(frame: frame)
+        loadingMoreView!.hidden = true
+        tableView.addSubview(loadingMoreView!)
         
+        var insets = tableView.contentInset;
+        insets.bottom += InfiniteScrollActivityView.defaultHeight;
+        tableView.contentInset = insets
         
         
         // Do any additional setup after loading the view.
