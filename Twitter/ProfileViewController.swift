@@ -8,8 +8,9 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    var screenName: String = ""
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var screenNameLabel: UILabel!
@@ -21,6 +22,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var profPicView: UIImageView!
     
     
+    @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var coverPicView: UIImageView!
 
@@ -29,17 +31,49 @@ class ProfileViewController: UIViewController {
     
     var twitterUser: User?
     
+    var tweets: [Tweet] = []
+
     
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tweets.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("OwnTweetCell", forIndexPath: indexPath) as! OwnTweetCell
+        
+        let row = indexPath.row
+        
+        let tweet = tweets[row]
+        
+        cell.tweetTextLabel.text = tweet.text
+        
+        
+        cell.timeLabel.text = tweet.relativeTime
+        
+        
+        return cell
+        
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        profPicView.layer.cornerRadius = 15
+        profPicView.layer.masksToBounds = true
+
+
+        
         
         TwitterClient.sharedInstance.currentAccount({ (user: User) -> () in
             self.twitterUser = user
             
             self.nameLabel.text = self.twitterUser!.name
             self.screenNameLabel.text = "@\(self.twitterUser!.screenName!)"
+            self.screenName = self.twitterUser!.screenName!
             self.descriptionLabel.text = self.twitterUser!.userDescription
-            //self.numLikesLabel.text  = "\(self.twitterUser!.numFav)"
             self.numFollowersLabel.text = "\(self.twitterUser!.numFollowers)"
             self.numFollowingLabel.text = "\(self.twitterUser!.numFollowing)"
             self.numTweetsLabel.text = "\(self.twitterUser!.numTweets)"
@@ -55,13 +89,29 @@ class ProfileViewController: UIViewController {
             }
             
         )
-
         
+
+        TwitterClient.sharedInstance.userTweets(screenName, success: { (tweets:[Tweet]) -> () in
+            
+            // ... Use the new data to update the data source ...
+            self.tweets = tweets
+            
+            
+            // Reload the tableView now that there is new data
+            self.tableView.reloadData()
+            
+            
+            
+            
+            }, failure: { (error: NSError) -> () in
+                print(error.localizedDescription)
+                
+            }
+            
+        )
         
         titleLabel.font = UIFont(name: "Helvetica", size: 26.0)!
-        
-
-        
+     
         
         
         // Do any additional setup after loading the view.

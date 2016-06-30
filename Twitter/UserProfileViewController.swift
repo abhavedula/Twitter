@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserProfileViewController: UIViewController {
+class UserProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var screenName: String?
     
@@ -24,11 +24,48 @@ class UserProfileViewController: UIViewController {
     
     var twitterUser: User?
     
+    var tweets: [Tweet] = []
 
+
+    @IBOutlet weak var tableView: UITableView!
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tweets.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("UserTweetCell", forIndexPath: indexPath) as! UserTweetCell
+        
+        let row = indexPath.row
+        
+        let tweet = tweets[row]
+        
+        cell.tweetLabel.text = tweet.text
+        
+        
+        
+        cell.timeLabel.text = tweet.relativeTime
+        
+        
+        
+        
+        return cell
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        profPicView.layer.cornerRadius = 15
+        profPicView.layer.masksToBounds = true
+
 
         // Do any additional setup after loading the view.
+        
+        print("name \(screenName)")
         
         TwitterClient.sharedInstance.getUser(screenName!, success: { (user: User) -> () in
             self.twitterUser = user
@@ -42,6 +79,25 @@ class UserProfileViewController: UIViewController {
             self.numTweetsLabel.text = "\(self.twitterUser!.numTweets)"
             self.profPicView.setImageWithURL(self.twitterUser!.profileUrl!)
             self.coverPicView.setImageWithURL(self.twitterUser!.coverUrl!)
+            
+            
+            
+            }, failure: { (error: NSError) -> () in
+                print(error.localizedDescription)
+                
+            }
+            
+        )
+        
+        TwitterClient.sharedInstance.userTweets(screenName!, success: { (tweets:[Tweet]) -> () in
+            
+            // ... Use the new data to update the data source ...
+            self.tweets = tweets
+            
+            
+            // Reload the tableView now that there is new data
+            self.tableView.reloadData()
+            
             
             
             

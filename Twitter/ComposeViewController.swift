@@ -8,13 +8,19 @@
 
 import UIKit
 
-class ComposeViewController: UIViewController {
+class ComposeViewController: UIViewController, UITextViewDelegate {
 
-    @IBOutlet weak var tweetField: UITextField!
+    
+    @IBOutlet weak var tweetTextView: UITextView!
+    
+    @IBOutlet weak var countLabel: UILabel!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tweetTextView.delegate = self
+        self.updateCharacterCount()
         
 
         // Do any additional setup after loading the view.
@@ -27,7 +33,7 @@ class ComposeViewController: UIViewController {
     
 
     @IBAction func onTweetButton(sender: AnyObject) {
-        let status = tweetField.text
+        let status = tweetTextView.text
         
         let aString: String = status!
         
@@ -35,14 +41,21 @@ class ComposeViewController: UIViewController {
         let newString2 = newString.stringByReplacingOccurrencesOfString(" ", withString: "%20", options: NSStringCompareOptions.LiteralSearch, range: nil)
             TwitterClient.sharedInstance.post(newString2)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func updateCharacterCount() {
+        self.countLabel.text = "\((140) - self.tweetTextView.text.characters.count)"
     }
-    */
-
+    
+    func textViewDidChange(textView: UITextView) {
+        self.updateCharacterCount()
+    }
+    
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        self.updateCharacterCount()
+        return textView.text.characters.count +  (text.characters.count - range.length) <= 140
+    }
+  
+    
+    
 }

@@ -26,6 +26,23 @@ class TwitterClient: BDBOAuth1SessionManager {
 
     }
     
+    
+    func userTweets(screenName: String, success: ([Tweet]) -> (), failure: (NSError) -> ()) {
+        GET("1.1/statuses/user_timeline.json?screen_name=\(screenName)&count=20", parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            
+            let dictionaries = response as? [NSDictionary]
+            
+            let tweets = Tweet.tweetsFromArray(dictionaries!)
+            
+            success(tweets)
+            
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) in
+                failure(error)
+        })
+        
+        
+    }
+    
     func like(id: String, success: () -> (), failure: (NSError) -> ())  {
         POST("1.1/favorites/create.json?id=\(id)", parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
             
@@ -53,8 +70,8 @@ class TwitterClient: BDBOAuth1SessionManager {
 
     }
     
-    func homeTimeline(success: ([Tweet]) -> (), failure: (NSError) -> ()) {
-        GET("1.1/statuses/home_timeline.json", parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+    func homeTimeline(success: ([Tweet]) -> (), failure: (NSError) -> (), count: Int) {
+        GET("1.1/statuses/home_timeline.json?count=\(count)", parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
             
             let dictionaries = response as? [NSDictionary]
             
@@ -66,6 +83,22 @@ class TwitterClient: BDBOAuth1SessionManager {
                 failure(error)
         })
 
+        
+    }
+    
+    func mentionsTimeline(success: ([Tweet]) -> (), failure: (NSError) -> ()) {
+        GET("1.1/statuses/mentions_timeline.json", parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            
+            let dictionaries = response as? [NSDictionary]
+            
+            let tweets = Tweet.tweetsFromArray(dictionaries!)
+            
+            success(tweets)
+            
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) in
+                failure(error)
+        })
+        
         
     }
     

@@ -16,6 +16,8 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var tweets: [Tweet] = []
     
+    var count = 20
+    
     var text: String?
     var numRetweets: Int = 0
     var numFav: Int = 0
@@ -64,6 +66,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func loadMoreData() {
         
+        count += 20
         
         TwitterClient.sharedInstance.homeTimeline({ (tweets:[Tweet]) -> () in
             self.isMoreDataLoading = false
@@ -82,7 +85,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }, failure: { (error: NSError) -> () in
                 print(error.localizedDescription)
                 
-            }
+            }, count: count
             
         )
 
@@ -149,6 +152,13 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
+
+        tableView.estimatedRowHeight = 120
+        tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+
+        
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), forControlEvents: UIControlEvents.ValueChanged)
         tableView.insertSubview(refreshControl, atIndex: 0)
@@ -167,7 +177,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }, failure: { (error: NSError) -> () in
                 print(error.localizedDescription)
         
-        }
+            }, count: 20
         
         )
         
@@ -203,9 +213,13 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         cell.timeLabel.text = tweet.relativeTime
         
+        cell.profPic.layer.cornerRadius = 15
+        cell.profPic.layer.masksToBounds = true
+
+        
         cell.profPic.setImageWithURL(tweet.profileUrl!)
         
-        
+       
         
         return cell
         
@@ -329,5 +343,11 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     }
     
+    override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
+    
+        
+        
+    }
 
 }

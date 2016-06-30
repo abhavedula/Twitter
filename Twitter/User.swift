@@ -48,7 +48,7 @@ class User: NSObject {
             coverUrl = NSURL(string: coverUrlString)
         }
         
-        print(response)
+        //print(response)
         
     }
     

@@ -1,27 +1,21 @@
 //
-//  TweetCell.swift
+//  MentionsTweetCell.swift
 //  Twitter
 //
-//  Created by Abha Vedula on 6/27/16.
+//  Created by Abha Vedula on 6/30/16.
 //  Copyright © 2016 Abha Vedula. All rights reserved.
 //
 
 import UIKit
 
-class TweetCell: UITableViewCell {
+class MentionsTweetCell: UITableViewCell {
 
-    
-    @IBOutlet weak var tweetTextLabel: UILabel!
-    
-    
+    @IBOutlet weak var profPicView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    
-    
+    @IBOutlet weak var screenNameLabel: UILabel!
+    @IBOutlet weak var tweetLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     
-    @IBOutlet weak var profPic: UIImageView!
-    
-    @IBOutlet weak var screenNameLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -33,7 +27,5 @@ class TweetCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
-   
 
 }
