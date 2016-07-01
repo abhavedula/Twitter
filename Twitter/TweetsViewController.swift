@@ -155,21 +155,14 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         tableView.reloadData()
         
-        //////////////////////////////////////////
-        //////////////////////////////////////////
-        //////////////////////////////////////////
-        //////////////////////////////////////////
-        //UNCOMMENT FOR AUTOLAYOUT AT THE END!!!!!
-        
-        //self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
 
-        //tableView.estimatedRowHeight = 120
-        //tableView.rowHeight = UITableViewAutomaticDimension
-        //self.tableView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        //////////////////////////////////////////
-        //////////////////////////////////////////
-        //////////////////////////////////////////
-        //////////////////////////////////////////
+        
+        self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
+
+        tableView.estimatedRowHeight = 120
+        tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+       
 
         
         let refreshControl = UIRefreshControl()
