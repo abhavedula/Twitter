@@ -145,6 +145,11 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
             
         )
+        
+        let button = sender as! UIButton
+        
+        button.setImage(UIImage(named: "like-2"), forState: UIControlState.Normal)
+
 
     }
     

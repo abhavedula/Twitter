@@ -17,8 +17,8 @@
                     </tabBar>
                     <connections>
                         <segue destination="Uma-Dr-cAA" kind="relationship" relationship="viewControllers" id="9Vf-Q6-dWN"/>
-                        <segue destination="R7w-7R-fCu" kind="relationship" relationship="viewControllers" id="wlV-ad-4kZ"/>
-                        <segue destination="kPX-3E-uWz" kind="relationship" relationship="viewControllers" id="3Vt-lM-90q"/>
+                        <segue destination="S01-04-wkQ" kind="relationship" relationship="viewControllers" id="wlV-ad-4kZ"/>
+                        <segue destination="G5u-1f-5Ld" kind="relationship" relationship="viewControllers" id="3Vt-lM-90q"/>
                         <segue destination="3eZ-LH-SI8" kind="relationship" relationship="viewControllers" id="M9I-n3-vJt"/>
                     </connections>
                 </tabBarController>
@@ -39,7 +39,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="172" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="oiA-fy-jMI">
-                                <rect key="frame" x="0.0" y="66" width="320" height="453"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="MentionsTweetCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="MentionsTweetCell" rowHeight="172" id="CB9-pl-yaT" customClass="MentionsTweetCell" customModule="Twitter" customModuleProvider="target">
@@ -88,26 +88,17 @@
                                             <outlet property="screenNameLabel" destination="Rpf-Mw-hKD" id="v23-e1-73x"/>
                                             <outlet property="timeLabel" destination="WzJ-V9-3lr" id="TXB-pF-lQy"/>
                                             <outlet property="tweetLabel" destination="FZ4-Rn-PsY" id="HJE-Io-kwz"/>
+                                            <segue destination="EIW-gb-uVq" kind="show" identifier="mentionsDetailSegue" id="bbD-kl-4us"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view alpha="0.85000002384185791" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yUz-6d-gd3">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="66"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mentions" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ntU-sk-mdJ">
-                                        <rect key="frame" x="65" y="16" width="202" height="44"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Mentions" id="Yd5-dc-Oug"/>
+                    <tabBarItem key="tabBarItem" title="Mentions" image="speaker-7" id="MGv-PW-uvp"/>
+                    <navigationItem key="navigationItem" id="I9f-Bk-mf4"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="tableView" destination="oiA-fy-jMI" id="wpc-Wy-GFt"/>
@@ -115,9 +106,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="heU-uw-cIr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1362" y="1452"/>
+            <point key="canvasLocation" x="1954" y="1466"/>
         </scene>
-        <!--Search View Controller-->
+        <!--Search-->
         <scene sceneID="bc9-xB-Hu6">
             <objects>
                 <viewController id="3DG-h2-sHL" customClass="SearchViewController" customModule="Twitter" customModuleProvider="target" sceneMemberID="viewController">
@@ -133,27 +124,31 @@
                                 <rect key="frame" x="0.0" y="62" width="320" height="44"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Weg-A0-Bmz">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="59" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Weg-A0-Bmz">
                                 <rect key="frame" x="0.0" y="106" width="320" height="462"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="SearchCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchCell" id="mYn-Bl-zZc" customClass="SearchCell" customModule="Twitter" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="SearchCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchCell" rowHeight="59" id="mYn-Bl-zZc" customClass="SearchCell" customModule="Twitter" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="320" height="59"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mYn-Bl-zZc" id="Wom-5H-csv">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="58"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XR3-8L-w9b">
-                                                    <rect key="frame" x="13" y="3" width="276" height="35"/>
+                                                    <rect key="frame" x="81" y="11" width="208" height="35"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wdh-rw-Vnf">
+                                                    <rect key="frame" x="14" y="3" width="49" height="47"/>
+                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="nameLabel" destination="XR3-8L-w9b" id="R9Y-i7-FRX"/>
+                                            <outlet property="profPic" destination="Wdh-rw-Vnf" id="11d-jR-5Tc"/>
                                             <segue destination="YvA-H3-Vdk" kind="show" identifier="SearchSegue" id="vJG-hE-w3G"/>
                                         </connections>
                                     </tableViewCell>
@@ -162,7 +157,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Search" image="search-7" selectedImage="search-7" id="mny-Oc-0VU"/>
                     <navigationItem key="navigationItem" id="lMN-hS-Bvf"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="searchBar" destination="5ch-7v-1zZ" id="Wjt-od-5nL"/>
@@ -171,9 +168,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xPP-Tf-Mg4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="404" y="1428"/>
+            <point key="canvasLocation" x="524" y="1428"/>
         </scene>
-        <!--Profile-->
+        <!--Profile View Controller-->
         <scene sceneID="apC-wP-Sdd">
             <objects>
                 <viewController id="R7w-7R-fCu" customClass="ProfileViewController" customModule="Twitter" customModuleProvider="target" sceneMemberID="viewController">
@@ -299,6 +296,7 @@
                                         <connections>
                                             <outlet property="timeLabel" destination="IjZ-9L-hHl" id="ZvG-Ky-35Q"/>
                                             <outlet property="tweetTextLabel" destination="b8x-ET-tD6" id="kDB-4t-3eB"/>
+                                            <segue destination="EIW-gb-uVq" kind="show" identifier="ProfileDetailSegue" id="giQ-j0-JT3"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -313,7 +311,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="tintColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Profile" image="circle-user-7" selectedImage="circle-user-7" id="bdD-Os-YSK"/>
+                    <navigationItem key="navigationItem" id="jBP-T4-LkC"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="coverPicView" destination="DaO-EQ-RJ6" id="pi7-mH-lMC"/>
@@ -330,7 +328,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="COC-PX-hq4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="692" y="2136"/>
+            <point key="canvasLocation" x="1504" y="2136"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -462,8 +460,8 @@
                                                         </mask>
                                                     </variation>
                                                 </textView>
-                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q3A-tl-oiX">
-                                                    <rect key="frame" x="0.0" y="178" width="322" height="1"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q3A-tl-oiX">
+                                                    <rect key="frame" x="-382" y="178" width="700" height="1"/>
                                                     <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <rect key="contentStretch" x="0.0" y="1" width="1" height="1"/>
                                                     <constraints>
@@ -726,6 +724,7 @@
                                             <outlet property="textLabel" destination="whV-ew-BCy" id="MzL-F6-UUI"/>
                                             <outlet property="timeLabel" destination="VhB-Af-UNd" id="UJl-eU-Nxg"/>
                                             <outlet property="tweetLabel" destination="whV-ew-BCy" id="uFj-NL-ioe"/>
+                                            <segue destination="EIW-gb-uVq" kind="show" identifier="UserDetailSegue" id="9hI-hU-zC3"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -742,6 +741,24 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X3q-uZ-gnO">
+                                <rect key="frame" x="249" y="139" width="63" height="21"/>
+                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <state key="normal" title="Follow">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="followButton:" destination="YvA-H3-Vdk" eventType="touchUpInside" id="5ZE-Ig-Zwi"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6nC-dO-oJ9">
+                                <rect key="frame" x="238" y="139" width="74" height="21"/>
+                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -749,6 +766,7 @@
                     <connections>
                         <outlet property="coverPicView" destination="ygH-hF-GNs" id="fRu-vz-7ri"/>
                         <outlet property="descriptionLabel" destination="070-3R-kZO" id="tih-b2-2wI"/>
+                        <outlet property="followLabel" destination="6nC-dO-oJ9" id="Mf1-X2-hBd"/>
                         <outlet property="nameLabel" destination="9fd-JY-GRu" id="jea-0B-rXI"/>
                         <outlet property="numFollowersLabel" destination="RsN-nJ-Fw6" id="aYJ-vo-yku"/>
                         <outlet property="numFollowingLabel" destination="ekz-JN-hCm" id="1Xk-qh-H0z"/>
@@ -760,7 +778,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bb4-dp-nMy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1032" y="2136"/>
+            <point key="canvasLocation" x="1944" y="2218"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="tj8-P9-Bml">
@@ -921,7 +939,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lln-27-z4h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1573" y="714"/>
+            <point key="canvasLocation" x="2403" y="1624"/>
         </scene>
         <!--Home-->
         <scene sceneID="6kN-1r-YHA">
@@ -941,7 +959,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FKx-ma-zhj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1742" y="1403"/>
+            <point key="canvasLocation" x="2554" y="1403"/>
         </scene>
         <!--Item-->
         <scene sceneID="fZX-sl-iKq">
@@ -963,15 +981,58 @@
             </objects>
             <point key="canvasLocation" x="-408" y="1428"/>
         </scene>
+        <!--Profile-->
+        <scene sceneID="l9V-VH-di3">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="S01-04-wkQ" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Profile" image="circle-user-7" selectedImage="circle-user-7" id="bdD-Os-YSK"/>
+                    <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="kVG-rh-q9e">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="R7w-7R-fCu" kind="relationship" relationship="rootViewController" id="4l9-WB-LGl"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jte-Fb-BS3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="692" y="2136"/>
+        </scene>
+        <!--Mentions-->
+        <scene sceneID="4SV-bk-DWH">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="G5u-1f-5Ld" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Mentions" id="Yd5-dc-Oug"/>
+                    <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gy1-ya-3k1">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="kPX-3E-uWz" kind="relationship" relationship="rootViewController" id="rOg-Bq-1Uq"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3D3-My-QsC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1142" y="1466"/>
+        </scene>
     </scenes>
     <resources>
         <image name="circle-user-7" width="30" height="30"/>
         <image name="house-7" width="30" height="30"/>
         <image name="like-1" width="50" height="48"/>
         <image name="retweet-1" width="50" height="33"/>
+        <image name="search-7" width="30" height="30"/>
+        <image name="speaker-7" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="bbD-kl-4us"/>
         <segue reference="6VJ-NE-Yxc"/>
-        <segue reference="nmM-Tq-tyM"/>
+        <segue reference="vJG-hE-w3G"/>
     </inferredMetricsTieBreakers>
 </document>

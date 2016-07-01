@@ -10,7 +10,6 @@ import UIKit
 
 class UserProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var screenName: String?
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var screenNameLabel: UILabel!
@@ -21,6 +20,18 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var numFollowingLabel: UILabel!
     @IBOutlet weak var profPicView: UIImageView!
     @IBOutlet weak var coverPicView: UIImageView!
+    
+    
+    var text: String?
+    var numRetweets: Int = 0
+    var numFav: Int = 0
+    var name: String?
+    var screenName: String?
+    var profileUrl: NSURL?
+    var relativeTime: String?
+    var id: String?
+    
+    var profileButtonRow: Int?
     
     var twitterUser: User?
     
@@ -54,6 +65,40 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         
     }
     
+    @IBAction func followButton(sender: AnyObject) {
+        
+        if twitterUser?.following == false {
+        
+        let id = twitterUser!.id!
+        
+        print(id)
+        
+        TwitterClient.sharedInstance.follow(id, success: { () -> () in
+            
+            //self.tableView.reloadData()
+            
+            
+            
+            }, failure: { (error: NSError) -> () in
+                print(error.localizedDescription)
+                
+            }
+            
+        )
+            
+          let button = sender as! UIButton
+            button.setTitle("Following", forState: UIControlState.Normal)
+        
+        } else {
+            print("already following")
+        }
+        
+
+    }
+    
+    
+    @IBOutlet weak var followLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -61,8 +106,8 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         tableView.dataSource = self
         profPicView.layer.cornerRadius = 15
         profPicView.layer.masksToBounds = true
-
-
+        
+      
         // Do any additional setup after loading the view.
         
         print("name \(screenName)")
@@ -78,9 +123,18 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             self.numFollowingLabel.text = "\(self.twitterUser!.numFollowing)"
             self.numTweetsLabel.text = "\(self.twitterUser!.numTweets)"
             self.profPicView.setImageWithURL(self.twitterUser!.profileUrl!)
-            self.coverPicView.setImageWithURL(self.twitterUser!.coverUrl!)
+            
+            let cover = self.twitterUser!.coverUrl
+            if let cover = cover {
+                self.coverPicView.setImageWithURL(self.twitterUser!.coverUrl!)
+            }
             
             
+            if self.twitterUser?.following == true {
+                self.followLabel.text = "Following"
+            } else {
+                self.followLabel.hidden = true
+            }
             
             }, failure: { (error: NSError) -> () in
                 print(error.localizedDescription)
@@ -107,6 +161,8 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             }
             
         )
+        
+    
 
     }
 
@@ -115,7 +171,55 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         // Dispose of any resources that can be recreated.
     }
     
-
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let indexPathDetail = tableView.indexPathForCell(sender as! UserTweetCell)
+        
+        let detailViewController = segue.destinationViewController as! DetailViewController
+        
+        var row: Int!
+        
+        row = indexPathDetail?.row
+        
+        let tweet = tweets[row!]
+        
+        
+        text = tweet.text
+        
+        name = tweet.name!
+        
+        screenName = tweet.screenName!
+        
+        relativeTime = tweet.relativeTime
+        
+        profileUrl = tweet.profileUrl!
+        
+        numRetweets = tweet.numRetweets
+        
+        numFav = tweet.numFav
+        
+        
+        
+        if let button = sender as? UIButton {
+            if let superview = button.superview {
+                if let cell = superview.superview as? TweetCell {
+                    row = tableView.indexPathForCell(cell)?.row
+                }
+            }
+        }
+        
+        
+        id = tweet.id!
+        
+        
+        detailViewController.name = self.name
+        detailViewController.text = self.text
+        detailViewController.numRetweets = self.numRetweets
+        detailViewController.numFav = self.numFav
+        detailViewController.screenName = self.screenName
+        detailViewController.profileUrl = self.profileUrl
+        detailViewController.relativeTime = self.relativeTime
+        detailViewController.id = self.id
+    }
     /*
     // MARK: - Navigation
 

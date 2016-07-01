@@ -19,6 +19,8 @@ class User: NSObject {
     var numFollowing: Int = 0
     var numTweets: Int = 0
     var coverUrl: NSURL?
+    var id: String?
+    var following: Bool?
 
     
     var dictionary: NSDictionary?
@@ -32,6 +34,8 @@ class User: NSObject {
         numFav = response["favourites_count"] as! Int
         numFollowers = response["followers_count"] as! Int
         numFollowing = response["friends_count"] as! Int
+        id = response["id_str"] as? String
+        following = response["following"] as? Bool
         
         
         let profileUrlString = response["profile_image_url_https"] as? String
@@ -41,6 +45,7 @@ class User: NSObject {
             let newString = aString.stringByReplacingOccurrencesOfString("_normal", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
             profileUrl = NSURL(string: newString)
         }
+        
         
         let coverUrlString = response["profile_banner_url"] as? String
         

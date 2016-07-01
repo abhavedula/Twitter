@@ -23,6 +23,8 @@ class MentionsViewController: UIViewController, UITableViewDelegate, UITableView
     var id: String?
     
     @IBOutlet weak var tableView: UITableView!
+    
+    
 
 
 
@@ -32,6 +34,9 @@ class MentionsViewController: UIViewController, UITableViewDelegate, UITableView
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        self.navigationItem.title = "Mentions"
+
         
         TwitterClient.sharedInstance.mentionsTimeline({ (tweets:[Tweet]) -> () in
             self.tweets = tweets
@@ -45,6 +50,11 @@ class MentionsViewController: UIViewController, UITableViewDelegate, UITableView
             }
             
         )
+        
+        let customTabBarItem = UITabBarItem(title: "Mentions", image: UIImage(named: "speaker-7"), selectedImage: UIImage(named: "speaker-7"))
+        self.tabBarItem = customTabBarItem
+        
+
 
 
         // Do any additional setup after loading the view.
@@ -84,6 +94,57 @@ class MentionsViewController: UIViewController, UITableViewDelegate, UITableView
         // Dispose of any resources that can be recreated.
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        
+            let indexPathDetail = tableView.indexPathForCell(sender as! MentionsTweetCell)
+            
+            let detailViewController = segue.destinationViewController as! DetailViewController
+            
+            var row: Int!
+            
+            row = indexPathDetail?.row
+            
+            let tweet = tweets[row!]
+            
+            
+            text = tweet.text
+            
+            name = tweet.name!
+            
+            screenName = tweet.screenName!
+            
+            relativeTime = tweet.relativeTime
+            
+            profileUrl = tweet.profileUrl!
+            
+            numRetweets = tweet.numRetweets
+            
+            numFav = tweet.numFav
+            
+            
+            
+            if let button = sender as? UIButton {
+                if let superview = button.superview {
+                    if let cell = superview.superview as? TweetCell {
+                        row = tableView.indexPathForCell(cell)?.row
+                    }
+                }
+            }
+            
+            
+            id = tweet.id!
+            
+            
+            detailViewController.name = self.name
+            detailViewController.text = self.text
+            detailViewController.numRetweets = self.numRetweets
+            detailViewController.numFav = self.numFav
+            detailViewController.screenName = self.screenName
+            detailViewController.profileUrl = self.profileUrl
+            detailViewController.relativeTime = self.relativeTime
+            detailViewController.id = self.id
+        }
 
     /*
     // MARK: - Navigation
@@ -94,5 +155,7 @@ class MentionsViewController: UIViewController, UITableViewDelegate, UITableView
         // Pass the selected object to the new view controller.
     }
     */
+    
+    
 
 }

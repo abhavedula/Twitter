@@ -30,14 +30,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         let customTabBarItem = UITabBarItem(title: "Search", image: UIImage(named: "search-7"), selectedImage: UIImage(named: "search-7"))
         self.tabBarItem = customTabBarItem
         
-        
-
-
-        
-     
-
-
-
 
 
         // Do any additional setup after loading the view.
@@ -56,6 +48,13 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         let user = users[row]
         
        cell.nameLabel.text = user.name
+        
+       cell.profPic.setImageWithURL(user.profileUrl!)
+        
+        cell.profPic.layer.cornerRadius = 15
+        cell.profPic.layer.masksToBounds = true
+        
+
         
         
         return cell

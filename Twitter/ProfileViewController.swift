@@ -12,6 +12,16 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var screenName: String = ""
     
+    var text: String?
+    var numRetweets: Int = 0
+    var numFav: Int = 0
+    var name: String?
+    //var screenName: String?
+    var profileUrl: NSURL?
+    var relativeTime: String?
+    var id: String?
+    
+    var profileButtonRow: Int?
     
     
     @IBOutlet weak var nameLabel: UILabel!
@@ -64,6 +74,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         tableView.dataSource = self
         profPicView.layer.cornerRadius = 15
         profPicView.layer.masksToBounds = true
+        
+        self.navigationItem.title = "Your Profile"
+
 
 
         
@@ -221,6 +234,57 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
      
         
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let indexPathDetail = tableView.indexPathForCell(sender as! OwnTweetCell)
+        
+        let detailViewController = segue.destinationViewController as! DetailViewController
+        
+        var row: Int!
+        
+        row = indexPathDetail?.row
+        
+        let tweet = tweets[row!]
+        
+        
+        text = tweet.text
+        
+        name = tweet.name!
+        
+        screenName = tweet.screenName!
+        
+        relativeTime = tweet.relativeTime
+        
+        profileUrl = tweet.profileUrl!
+        
+        numRetweets = tweet.numRetweets
+        
+        numFav = tweet.numFav
+        
+        
+        
+        if let button = sender as? UIButton {
+            if let superview = button.superview {
+                if let cell = superview.superview as? TweetCell {
+                    row = tableView.indexPathForCell(cell)?.row
+                }
+            }
+        }
+        
+        
+        id = tweet.id!
+        
+        
+        detailViewController.name = self.name
+        detailViewController.text = self.text
+        detailViewController.numRetweets = self.numRetweets
+        detailViewController.numFav = self.numFav
+        detailViewController.screenName = self.screenName
+        detailViewController.profileUrl = self.profileUrl
+        detailViewController.relativeTime = self.relativeTime
+        detailViewController.id = self.id
+    }
+
     
 
     /*

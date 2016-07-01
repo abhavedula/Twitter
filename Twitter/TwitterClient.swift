@@ -87,7 +87,11 @@ class TwitterClient: BDBOAuth1SessionManager {
     }
     
     func search(search: String, success: ([User]) -> (), failure: (NSError) -> ()) {
-        GET("1.1/users/search.json?q=\(search)", parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+        
+        let aString: String = search
+        let newString = aString.stringByReplacingOccurrencesOfString(" ", withString: "%20", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        
+        GET("1.1/users/search.json?q=\(newString)", parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
             
             
             let dictionaries = response as? [NSDictionary]
@@ -165,6 +169,18 @@ class TwitterClient: BDBOAuth1SessionManager {
         deauthorize()
         
         NSNotificationCenter.defaultCenter().postNotificationName(User.userDidLogoutNotification, object: nil)
+    }
+    
+    func follow(id: String, success: () -> (), failure: (NSError) -> ())  {
+        POST("1.1/friendships/create.json?user_id=\(id)&follow=true", parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            
+            print("followed")
+            success()
+            
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) in
+                print("following failed")
+                failure(error)
+        })
     }
     
     
