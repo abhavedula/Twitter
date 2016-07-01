@@ -11,8 +11,8 @@ import UIKit
 class TweetCell: UITableViewCell {
 
     
-    @IBOutlet weak var tweetTextLabel: UILabel!
     
+    @IBOutlet weak var field: UITextView!
     
     @IBOutlet weak var nameLabel: UILabel!
     

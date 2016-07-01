@@ -152,6 +152,8 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.reloadData()
+        
         self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
 
         tableView.estimatedRowHeight = 120
@@ -202,8 +204,13 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let tweet = tweets[row]
         
-        cell.tweetTextLabel.text = tweet.text
         
+        //
+        cell.field.text = tweet.text
+        cell.field.editable = false
+        cell.field.userInteractionEnabled = false
+        cell.field.dataDetectorTypes = .Link
+        //
         
         cell.nameLabel.text = tweet.name!
         

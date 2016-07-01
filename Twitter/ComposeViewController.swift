@@ -40,6 +40,8 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         let newString = aString.stringByReplacingOccurrencesOfString(", ", withString: "%2c")
         let newString2 = newString.stringByReplacingOccurrencesOfString(" ", withString: "%20", options: NSStringCompareOptions.LiteralSearch, range: nil)
             TwitterClient.sharedInstance.post(newString2)
+        
+        performSegueWithIdentifier("backToFeed", sender: nil)
     }
     
     func updateCharacterCount() {
