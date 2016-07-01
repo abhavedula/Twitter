@@ -86,6 +86,21 @@ class TwitterClient: BDBOAuth1SessionManager {
         
     }
     
+    func search(search: String, success: ([User]) -> (), failure: (NSError) -> ()) {
+        GET("1.1/users/search.json?q=\(search)", parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            
+            
+            let dictionaries = response as? [NSDictionary]
+            
+            let users = User.usersFromArray(dictionaries!)
+            
+            success(users)
+            
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) in
+                failure(error)
+        })
+    }
+    
     func mentionsTimeline(success: ([Tweet]) -> (), failure: (NSError) -> ()) {
         GET("1.1/statuses/mentions_timeline.json", parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
             
@@ -151,6 +166,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         
         NSNotificationCenter.defaultCenter().postNotificationName(User.userDidLogoutNotification, object: nil)
     }
+    
     
     
     func handleOpenUrl(url: NSURL) {

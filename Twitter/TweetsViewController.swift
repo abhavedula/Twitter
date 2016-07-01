@@ -33,6 +33,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var loadingMoreView:InfiniteScrollActivityView?
 
 
+    @IBOutlet weak var searchBar: UISearchBar!
  
     @IBAction func onComposeButton(sender: AnyObject) {
         performSegueWithIdentifier("composeSegue", sender: nil)
@@ -154,11 +155,21 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         tableView.reloadData()
         
-        self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
+        //////////////////////////////////////////
+        //////////////////////////////////////////
+        //////////////////////////////////////////
+        //////////////////////////////////////////
+        //UNCOMMENT FOR AUTOLAYOUT AT THE END!!!!!
+        
+        //self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
 
-        tableView.estimatedRowHeight = 120
-        tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        //tableView.estimatedRowHeight = 120
+        //tableView.rowHeight = UITableViewAutomaticDimension
+        //self.tableView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        //////////////////////////////////////////
+        //////////////////////////////////////////
+        //////////////////////////////////////////
+        //////////////////////////////////////////
 
         
         let refreshControl = UIRefreshControl()
@@ -182,6 +193,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }, count: 20
         
         )
+        
         
         // Set up Infinite Scroll loading indicator
         let frame = CGRectMake(0, tableView.contentSize.height, tableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight)
@@ -356,5 +368,9 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         
     }
+    
+    
+    
+
 
 }

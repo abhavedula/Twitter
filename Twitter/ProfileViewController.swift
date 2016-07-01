@@ -1,4 +1,3 @@
-//
 //  ProfileViewController.swift
 //  Twitter
 //
@@ -7,15 +6,17 @@
 //
 
 import UIKit
+import BDBOAuth1Manager
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var screenName: String = ""
     
+    
+    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var screenNameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var numLikesLabel: UILabel!
     @IBOutlet weak var numFollowersLabel: UILabel!
     @IBOutlet weak var numTweetsLabel: UILabel!
     @IBOutlet weak var numFollowingLabel: UILabel!
@@ -65,7 +66,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         profPicView.layer.masksToBounds = true
 
 
-        
         
         TwitterClient.sharedInstance.currentAccount({ (user: User) -> () in
             self.twitterUser = user
@@ -120,6 +120,106 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        let originalImage = coverPicView.image
+
+        
+        var offset = scrollView.contentOffset.y
+        var avatarTransform = CATransform3DIdentity
+        var headerTransform = CATransform3DIdentity
+        
+        let header = coverPicView
+        
+        let avatar = profPicView
+        
+        let offset_HeaderStop: CGFloat = 70
+        
+        UIView.animateWithDuration(0.8, animations: {
+            avatar.center.y -= 5
+            self.nameLabel.center.y -= 5
+            self.screenNameLabel.center.y -= 5
+            }, completion: nil)
+        
+        if offset < 0 {
+            
+            let headerScaleFactor:CGFloat = -(offset) / header.bounds.height
+            let headerSizevariation = ((header.bounds.height * (1.0 + headerScaleFactor)) - header.bounds.height)/2.0
+            headerTransform = CATransform3DTranslate(headerTransform, 0, headerSizevariation, 0)
+            headerTransform = CATransform3DScale(headerTransform, 1.0 + headerScaleFactor, 1.0 + headerScaleFactor, 0)
+            
+            header.layer.transform = headerTransform
+            
+            headerTransform = CATransform3DTranslate(headerTransform, 0, max(-offset_HeaderStop, -offset), 0)
+            
+                       ///
+            
+            
+            //let headerScaleFactor:CGFloat = -(offset) / header.bounds.height
+            //let headerSizevariation = ((header.bounds.height * (1.0 + headerScaleFactor)) - header.bounds.height)/2.0
+//            avatarTransform = CATransform3DTranslate(headerTransform, 0, headerSizevariation, 0)
+//            
+//            avatar.layer.transform = avatarTransform
+//            
+//            avatarTransform = CATransform3DTranslate(avatarTransform, 0, max(-offset_HeaderStop, -offset), 0)
+            
+            
+//
+//            var context: CIContext = CIContext(options: nil)
+//            var inputImage: CIImage = CIImage(image: coverPicView.image!)!
+//            var blurFilter: CIFilter = CIFilter(name: "CIGaussianBlur")!
+//            blurFilter.setDefaults()
+//            blurFilter.setValue(inputImage, forKey: kCIInputImageKey)
+//            var blurLevel: CGFloat = 20.0
+//            // Set blur level
+//                        //
+//            // Then apply new rect
+//            let output = blurFilter.outputImage
+//            let cgimg = context.createCGImage(output!, fromRect: output!.extent)
+//            let processedImage = UIImage(CGImage: cgimg)
+//            
+//            coverPicView.image = processedImage
+            
+            
+//            let filter = "CIGaussianBlur"
+//            let inputImage = coverPicView.image
+//            let context = CIContext(options: nil)
+//            
+//            if let currentFilter = CIFilter(name: filter) {
+//                let beginImage = CIImage(image: inputImage!)
+//                currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
+//                
+//                
+//                if let output = currentFilter.outputImage {
+//                    let cgimg = context.createCGImage(output, fromRect: output.extent)
+//                    var ciImage = CIImage(CGImage: cgimg)
+//
+//                    let processedImage = UIImage(CIImage: ciImage)
+//                    
+//                    coverPicView.image = processedImage
+//                    
+//                    
+//                }
+//            }
+            
+           
+        }
+        
+        //coverPicView.image = originalImage
+        
+        UIView.animateWithDuration(0.5, animations: {
+            avatar.center.y += 5
+            self.nameLabel.center.y += 5
+            self.screenNameLabel.center.y += 5
+            }, completion: nil)
+
+        
+       
+        
+     
+        
     }
     
 
