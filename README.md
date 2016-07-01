@@ -34,12 +34,12 @@ The following **optional** features are implemented:
 - [ ] User can reply to any tweet, and replies should be prefixed with the username and the reply_id should be set when posting the tweet
 - [x] Links in tweets are clickable
 - [x] User can switch between timeline, mentions, or profile view through a tab bar
-- [ ] Pulling down the profile page should blur and resize the header image.
+- [x] Pulling down the profile page should resize the header image.
 - [x] Profile view should include that user's timeline
 
 The following **additional** features are implemented:
 
-- [ ] List anything else that you can get done to improve the app functionality!
+- [x] Search bar to search for users
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
