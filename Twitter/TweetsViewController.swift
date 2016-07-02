@@ -157,6 +157,9 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.layoutMargins = UIEdgeInsetsZero
+        tableView.separatorInset = UIEdgeInsetsZero
+        tableView.separatorColor = UIColor(red: 0, green: 128/255, blue: 64/255, alpha: 1)
         
         tableView.reloadData()
         
@@ -164,8 +167,9 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
 
-        tableView.estimatedRowHeight = 120
-        tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 120
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        
         self.tableView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
        
 
@@ -205,7 +209,9 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         
         // Do any additional setup after loading the view.
-    }
+        
+        
+            }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("TweetCell", forIndexPath: indexPath) as! TweetCell
@@ -218,7 +224,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //
         cell.field.text = tweet.text
         cell.field.editable = false
-        cell.field.userInteractionEnabled = false
+        //cell.field.userInteractionEnabled = false
         cell.field.dataDetectorTypes = .Link
         //
         
@@ -236,8 +242,9 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         cell.profPic.setImageWithURL(tweet.profileUrl!)
         
+        cell.layoutMargins = UIEdgeInsetsZero
        
-        
+
         return cell
         
     }
@@ -365,6 +372,12 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
         
         
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.tableView.reloadData()
+    
     }
     
     

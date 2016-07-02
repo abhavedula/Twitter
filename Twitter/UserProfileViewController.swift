@@ -38,6 +38,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     var tweets: [Tweet] = []
 
 
+    @IBOutlet weak var followButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -66,16 +67,17 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     @IBAction func followButton(sender: AnyObject) {
-        
-        if twitterUser?.following == false {
-        
         let id = twitterUser!.id!
         
         print(id)
+
         
+        if twitterUser?.following == false {
+        
+            
         TwitterClient.sharedInstance.follow(id, success: { () -> () in
             
-            //self.tableView.reloadData()
+            self.tableView.reloadData()
             
             
             
@@ -89,10 +91,25 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
           let button = sender as! UIButton
             button.setTitle("Following", forState: UIControlState.Normal)
         
-        } else {
-            print("already following")
+            print(twitterUser?.following)
+        } else if twitterUser?.following == true {
+                
+                TwitterClient.sharedInstance.destroy(id, success: { () -> () in
+                    
+                    self.tableView.reloadData()
+
+                    
+                    }, failure: { (error: NSError) -> () in
+                        print(error.localizedDescription)
+                        
+                    }
+                    
+                )
+            let button = sender as! UIButton
+            button.setTitle("Follow", forState: UIControlState.Normal)
+
+            
         }
-        
 
     }
     
@@ -131,10 +148,9 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             
             
             if self.twitterUser?.following == true {
-                self.followLabel.text = "Following"
+                self.followButton.setTitle("Following", forState: UIControlState.Normal)
             } else {
-                self.followLabel.hidden = true
-            }
+                self.followButton.setTitle("Follow", forState: UIControlState.Normal)            }
             
             }, failure: { (error: NSError) -> () in
                 print(error.localizedDescription)

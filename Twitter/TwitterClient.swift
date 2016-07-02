@@ -183,6 +183,19 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
+    func destroy(id: String, success: () -> (), failure: (NSError) -> ())  {
+        POST("1.1/friendships/destroy.json?user_id=\(id)", parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            
+            print("unfollowed")
+            success()
+            
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) in
+                print("unfollowing failed")
+                failure(error)
+        })
+    }
+    
+    
     
     
     func handleOpenUrl(url: NSURL) {
