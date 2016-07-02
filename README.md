@@ -53,6 +53,7 @@ Here's a walkthrough of implemented user stories:
 
 <html>
 <a href = "http://i.imgur.com/prQs13q.gifv"> video </a>
+<a href = "http://i.imgur.com/RPTBNgP.gifv"> video 2 (autolayout and retweeting) </a>
 </html>
 
 
